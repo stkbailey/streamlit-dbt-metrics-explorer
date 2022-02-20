@@ -1,7 +1,5 @@
-{{ config(materialized="table") }}
-
-with movies as (
-    select * from {{ ref("raw_netflix_titles") }}
+with source as (
+    select * from {{ ref("raw_netflix_releases") }}
 )
 
 select
@@ -21,4 +19,4 @@ select
     , case when duration ilike '%season' then trim(duration, 'Season') :: number end as season_duration
 
 from
-    movies
+    source

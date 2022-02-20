@@ -1,6 +1,4 @@
-{{ config(materialized="table") }}
-
-with matches as (
+with source as (
     select * from {{ ref("raw_soccer_matches") }}
 )
 
@@ -18,4 +16,4 @@ select
     , home_score = away_score as is_tie
     , home_score > away_score as is_home_win
 from
-    matches
+    source

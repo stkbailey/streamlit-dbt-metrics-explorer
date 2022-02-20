@@ -19,13 +19,22 @@ available_time_grains = node["time_grains"]
 
 selected_dimensions_list = streamlit.sidebar.multiselect("Select one or more dimensions", options=available_dimensions)
 selected_time_grain = streamlit.sidebar.selectbox("Select a time grain", options=available_time_grains)
+
+
+calculation_options = [
+    'metrics.period_over_period(comparison_strategy="ratio", interval=1)',
+    'metrics.period_over_period(comparison_strategy="difference", interval=1)',
+    'metrics.rolling(aggregate="max", interval=1)',
+    'metrics.rolling(aggregate="min", interval=1)',
+]
+secondary_calcs_list = streamlit.sidebar.multiselect("Select secondary calculations", options=calculation_options)
+
 DEBUG=streamlit.sidebar.checkbox("Debug Mode", value=False)
-
-
 query = metrics.populate_template_query(
     metric_name=selected_metric_name,
     time_grain=selected_time_grain,
-    dimensions_list=selected_dimensions_list
+    dimensions_list=selected_dimensions_list,
+    secondary_calcs_list='[' + ','.join(secondary_calcs_list) + ']'
 )
 
 with streamlit.spinner("Fetching query results"):

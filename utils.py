@@ -75,7 +75,7 @@ class MetricsUtil:
         return pandas.read_sql_query(compiled, self.conn)
 
 
-    def populate_template_query(self, metric_name, time_grain, dimensions_list):
+    def populate_template_query(self, metric_name, time_grain, dimensions_list=[], secondary_calcs_list=[]):
         query = """
         select * from
         {{{{ 
@@ -83,17 +83,12 @@ class MetricsUtil:
                 metric_name='{metric_name}',
                 grain='{time_grain}',
                 dimensions={dimensions_list},
-                secondary_calculations=[
-                    metrics.period_over_period(comparison_strategy="ratio", interval=1),
-                    metrics.period_over_period(comparison_strategy="difference", interval=1),
-                    metrics.rolling(aggregate="max", interval=4),
-                    metrics.rolling(aggregate="min", interval=4)
-                ]
+                secondary_calculations={secondary_calcs_list}
             )
         }}}}
         where period between '2016-01-01':: date and '2021-10-01':: date
         order by period
-        """.format(metric_name=metric_name, time_grain=time_grain, dimensions_list=dimensions_list)
+        """.format(metric_name=metric_name, time_grain=time_grain, dimensions_list=dimensions_list, secondary_calcs_list=secondary_calcs_list)
         return query
 
 

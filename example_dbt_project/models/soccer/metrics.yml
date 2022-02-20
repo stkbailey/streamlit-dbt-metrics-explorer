@@ -2,8 +2,8 @@ version: 2
 
 
 metrics:
-  - name: soccer_matches
-    label: Netflix Show Releases
+  - name: count_of_won_soccer_matches
+    label: count_of_won_soccer_matches
     model: ref('soccer_matches')
     description: Something something soccer
 

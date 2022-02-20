@@ -1715,7 +1715,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8,<3.11"
-content-hash = "4b4210ba21d3d588f1da86553ec45f59923679191f76d9b756292f81eedf5983"
+content-hash = "0fc85b1bcf95db52825e1ae205e727abd5f42bd74ea1c62f2cc149afe5379399"
 
 [metadata.files]
 agate = [

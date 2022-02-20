@@ -2,9 +2,10 @@ version: 2
 
 
 metrics:
-  - name: netflix_releases
-    label: Netflix Releases
-    model: ref('netflix_performance')
+  - name: netflix_show_releases
+    label: Netflix Show Releases
+    model: ref('netflix_releases')
+    description: The number of shows released over time.
 
     type: count_distinct
     sql: show_id
@@ -15,7 +16,7 @@ metrics:
     dimensions:
     - show_type
     - director
-    - country_first
+    - country
     - release_decade
     - maturity_rating
 

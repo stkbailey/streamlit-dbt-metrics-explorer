@@ -1,0 +1,38 @@
+version: 2
+
+
+metrics:
+  - name: soccer_matches
+    label: Netflix Show Releases
+    model: ref('soccer_matches')
+    description: Something something soccer
+
+    type: count
+    sql: 'match_date'
+
+    timestamp: match_date
+    time_grains: [week, month, year]
+
+    dimensions:
+    - country
+    - is_friendly
+    - is_tie
+    - is_home_win
+
+    filters:
+    - field: is_tie
+      operator: '='
+      value: "false"
+
+    
+    # filters:
+    #   - field: is_paying
+    #     operator: 'is'
+    #     value: 'true'
+    #   - field: lifetime_value
+    #     operator: '>='
+    #     value: '100'
+    #   - field: company_name
+    #     operator: '!='
+    #     value: "'Acme, Inc'"
+

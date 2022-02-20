@@ -16,7 +16,7 @@ from cryptography.hazmat.primitives import serialization
 
 class MetricsUtil:
     def __init__(self):
-        self.dbt_dir = pathlib.Path().cwd() / "metrics_example"
+        self.dbt_dir = pathlib.Path().cwd() / "example_dbt_project"
         self.conn = self.get_db_connection()
         self.manifest = self._read_manifest_file()
         self.metrics_list = self.get_metric_names()
@@ -63,10 +63,11 @@ class MetricsUtil:
     def _get_compiled_query(self, raw_query):
         name = "dynamic_query.sql"
         output_model_path = self.dbt_dir / "models" / name
-        compiled_query_path = self.dbt_dir / "target" / "compiled" / "metrics_example" / "models" / name
+        compiled_query_path = self.dbt_dir / "target" / "compiled" / "example_dbt_project" / "models" / name
         output_model_path.write_text(raw_query)
         self._compile_project()
         query = compiled_query_path.read_text()
+        output_model_path.unlink()
         return query
 
     def get_query_results(self, raw_query):

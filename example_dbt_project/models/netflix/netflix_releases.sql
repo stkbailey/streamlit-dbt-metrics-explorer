@@ -1,7 +1,7 @@
 {{ config(materialized="table") }}
 
 with movies as (
-    select * from {{ ref("netflix_titles") }}
+    select * from {{ ref("raw_netflix_titles") }}
 )
 
 select
@@ -12,8 +12,8 @@ select
     , cast_list :: text as cast_list
     , trim(split_part(country :: text, ',', 1)) as country
     , try_to_date(date_added) as show_added_date
-    , to_date(release_year :: text || '-01-01') as release_year
-    , floor(date_part('year', release_year), -1) as release_decade
+    , release_year :: number as release_year
+    , floor(release_year, -1) as release_decade
     , listed_in :: text as listed_in
     , description :: text as description
     , rating :: text as maturity_rating

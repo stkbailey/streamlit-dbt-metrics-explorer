@@ -1,0 +1,33 @@
+version: 2
+
+
+metrics:
+  - name: netflix_releases
+    label: Netflix Releases
+    model: ref('netflix_performance')
+
+    type: count_distinct
+    sql: show_id
+
+    timestamp: show_added_date
+    time_grains: [week, month, year]
+
+    dimensions:
+    - show_type
+    - director
+    - country_first
+    - release_decade
+    - maturity_rating
+
+    
+    # filters:
+    #   - field: is_paying
+    #     operator: 'is'
+    #     value: 'true'
+    #   - field: lifetime_value
+    #     operator: '>='
+    #     value: '100'
+    #   - field: company_name
+    #     operator: '!='
+    #     value: "'Acme, Inc'"
+

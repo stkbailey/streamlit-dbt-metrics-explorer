@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "dbt-metrics-dev"
+version = "0.1.0"
+description = ""
+authors = ["Stephen Bailey <stkbailey@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8,<3.11"
+streamlit = "^1.5.1"
+dbt-snowflake = "^1.0.0"
+requests = "^2.27.1"
+snowflake-connector-python = "^2.7.4"
+scipy = "^1.8.0"
+seaborn = "^0.11.2"
+
+[tool.poetry.dev-dependencies]
+ipython = "^8.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

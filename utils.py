@@ -5,12 +5,8 @@ import json
 import pathlib
 import subprocess
 import pandas
-import snowflake.connector
 import os
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.primitives.asymmetric import dsa
-from cryptography.hazmat.primitives import serialization
+import psycopg2
 
 
 
@@ -29,34 +25,17 @@ class MetricsUtil:
         return json.loads(text)
 
     def _compile_project(self):
-        subprocess.run(["dbt", "compile"], cwd=self.dbt_dir.as_posix())
+        cmd = ["dbt", "compile", "--profiles-dir", "."]
+        subprocess.run(cmd, cwd=self.dbt_dir.as_posix())
 
     def get_db_connection(self):
-        account = os.environ["SNOWFLAKE_ACCOUNT"]
-        user = os.environ["SNOWFLAKE_USER"]
-        key_path = os.environ["SNOWFLAKE_KEY_PATH"]
-
-        # Read Private ssh key from .p8 file
-        with open(key_path, "rb") as key:
-            p_key= serialization.load_pem_private_key(
-                key.read(),
-                password=None,
-                backend=default_backend()
-            )
-
-        pkb = p_key.private_bytes(
-            encoding=serialization.Encoding.DER,
-            format=serialization.PrivateFormat.PKCS8,
-            encryption_algorithm=serialization.NoEncryption())
-
         # Connect to snowflake using the Provaiet key created above
-        conn = snowflake.connector.connect(
-            account=account,
-            user=user,
-            private_key=pkb,
-            database='scratch',
+        conn = psycopg2.connect(
+            host=os.environ["POSTGRES_SERVER"],
+            user=os.environ["POSTGRES_USER"],
+            password= os.environ["POSTGRES_PASSWORD"],
+            dbname='dev',
             schema='dbt',
-            warehouse='dbt',
         )
         return conn
 

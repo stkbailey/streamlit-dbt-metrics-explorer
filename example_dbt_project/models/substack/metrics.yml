@@ -1,0 +1,25 @@
+version: 2
+
+
+metrics:
+  - name: count_of_substack_subscribers
+    label: count_of_substack_subscribers
+    model: ref('substack_subscribers')
+    description: >
+      If you find any trends, let me know.
+
+    type: count_distinct
+    sql: subscriber_id
+
+    timestamp: subscribed_at
+    time_grains: [day, week, month]
+
+    dimensions:
+    - subscription_type
+    - activity_rating
+    - emails_enabled_for_newsletter
+    - subscriptions_gifted
+    - has_commented
+    - has_opened_email
+    - has_gifted_subscription
+    - is_recently_active

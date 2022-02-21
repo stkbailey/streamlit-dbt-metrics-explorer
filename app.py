@@ -8,7 +8,7 @@ metrics = MetricsUtil()
 
 streamlit.set_page_config(page_title="Metrics Explorer", page_icon="🔥")
 streamlit.header("🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥")
-streamlit.header("The Xtreme Metrix Explorer")
+streamlit.header("The X-treme MetriX X-plorer (XMXX)")
 
 selected_metric_name = streamlit.sidebar.selectbox(
     label="Select a metric", options=sorted(list(metrics.get_metric_names().keys()))
@@ -36,10 +36,15 @@ secondary_calcs_list = streamlit.sidebar.multiselect(
     "Select secondary calculations", options=calculation_options
 )
 
-DEBUG = streamlit.sidebar.checkbox("Debug Mode", value=False)
 # with streamlit.spinner("Running Models"):
 #     streamlit.sidebar.button("Rerun Models", on_click=metrics._run_project())
+streamlit.sidebar.markdown("🔥 [Blog](https://stkbailey.substack.com)")
+streamlit.sidebar.markdown("🔥 [GitHub](https://github.com/stkbailey/streamlit-dbt-metrics-explorer)")
+streamlit.sidebar.markdown("🔥 [Theme Song](https://www.youtube.com/watch?v=dQw4w9WgXcQ)")
 streamlit.sidebar.image("assets/fire-2.jpeg")
+DEBUG = streamlit.sidebar.checkbox("Debug Mode", value=False)
+
+
 def get_min_max_dates(metric_name):
     if "substack" in metric_name:
         return "2021-12-01", "2022-03-01"
@@ -94,6 +99,5 @@ streamlit.dataframe(df)
 streamlit.subheader("dbt Query")
 streamlit.text(query)
 
-streamlit.markdown("🔥  [Blog](https://stkbailey.substack.com)  🔥  [GitHub](https://github.com/stkbailey/streamlit-dbt-metrics-explorer)  🔥  [Theme Song](https://www.youtube.com/watch?v=dQw4w9WgXcQ)  🔥")
 
 streamlit.image("assets/fire-header.jpeg", use_column_width="always")

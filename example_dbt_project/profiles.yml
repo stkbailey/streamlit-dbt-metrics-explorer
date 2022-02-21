@@ -6,8 +6,8 @@ example_dbt_project:
       host: "{{ env_var('POSTGRES_SERVER') }}"
       user: "{{ env_var('POSTGRES_USER') }}"
       password: "{{ env_var('POSTGRES_PASSWORD') }}"
+      dbname:  "{{ env_var('POSTGRES_DATABASE', 'analytics') }}"
       port: 5432
-      dbname: analytics
       schema: dbt
       sslmode: prefer
       threads: 4

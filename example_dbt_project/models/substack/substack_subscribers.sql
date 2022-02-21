@@ -9,13 +9,10 @@ select
     , activity :: integer as activity_rating
     , subscription_date :: timestamp as subscribed_at
     , revenue :: text as revenue
-    , first_payment_at :: timestamp as first_payment_at
     , paid_upgrade_date :: timestamp as paid_upgrade_at
-    , cancel_date :: timestamp as cancelled_at
-    , expires_at :: numeric as expires_at
-    , emails_enabled_for_newsletter :: text as emails_enabled_for_newsletter
+    , emails_enabled_for_newsletters :: text as emails_enabled_for_newsletter
 
-    -- substack metrics
+    -- precomputed metrics
     , comments_all_time :: numeric as comments_all_time
     , comments_last_7_days :: numeric as comments_last_7_days
     , comments_last_30_days :: numeric as comments_last_30_days
@@ -35,8 +32,8 @@ select
     , uniuqe_web_post_views_last_7_days :: numeric as uniuqe_web_post_views_last_7_days
     , unique_web_post_views_last_30_days :: numeric as unique_web_post_views_last_30_days
     , subscriptions_gifted :: numeric as subscriptions_gifted
-    , subscription_source_free :: numeric as subscription_source_free
-    , subscription_source_paid :: numeric as subscription_source_paid
+    , subscription_source_free :: text as subscription_source_free
+    , subscription_source_paid :: text as subscription_source_paid
     , days_active_last_30_days :: numeric as days_active_last_30_days
 
     -- custom dimensions
@@ -44,5 +41,6 @@ select
     , email_opens_all_time > 0 as has_opened_email
     , subscriptions_gifted > 0 as has_gifted_subscription
     , days_active_last_30_days > 0 as is_recently_active
+
 from
     source

@@ -19,12 +19,17 @@ class MetricsUtil:
     def _read_manifest_file(self):
         manifest_path = self.dbt_dir / "target" / "manifest.json"
         if not manifest_path.exists():
+            self._install_project_dependencies()
             self._compile_project()
         text = manifest_path.read_text()
         return json.loads(text)
 
     def _compile_project(self):
         cmd = ["dbt", "compile", "--profiles-dir", "."]
+        subprocess.run(cmd, cwd=self.dbt_dir.as_posix())
+
+    def _install_project_dependencies(self):
+        cmd = ["dbt", "deps", "--profiles-dir", "."]
         subprocess.run(cmd, cwd=self.dbt_dir.as_posix())
 
     def _build_project(self):

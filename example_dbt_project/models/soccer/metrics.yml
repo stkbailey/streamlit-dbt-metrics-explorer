@@ -3,9 +3,11 @@ version: 2
 
 metrics:
   - name: count_of_won_soccer_matches
-    label: count_of_won_soccer_matches
+    label: Count of PLayed Soccer Matches 
     model: ref('soccer_matches')
-    description: Something something soccer
+    description: >
+      My best guess at what would be an interesting soccer statistic.
+      Data from [Kaggle's 'International Football Results from 1872 to 2021' dataset.](https://www.kaggle.com/martj42/international-football-results-from-1872-to-2017).
 
     type: count
     sql: 'match_date'

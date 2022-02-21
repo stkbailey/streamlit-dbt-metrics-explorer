@@ -2,11 +2,11 @@ version: 2
 
 
 metrics:
-  - name: count_of_substack_subscribers
-    label: Count of Data, People, Etc. Substack Subscribers
+  - name: count_of_new_substack_subscribers
+    label: Count of New Data, People, Etc. Substack Subscribers
     model: ref('substack_subscribers')
     description: >
-      If you find any trends, let me know.
+      Count of new subscribers to my [Substack](https://stkbailey.substack.com). If you find anything interseting, let me know.
 
     type: count_distinct
     sql: subscriber_id

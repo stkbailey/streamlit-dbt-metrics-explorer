@@ -6,8 +6,9 @@ from utils import MetricsUtil
 
 metrics = MetricsUtil()
 
-streamlit.set_page_config(page_title="Metrics Explorer", layout="wide", page_icon="🔥")
-streamlit.header("🔥🔥🔥 Behold, The Xtreme Metrix Explorer 🔥🔥🔥")
+streamlit.set_page_config(page_title="Metrics Explorer", page_icon="🔥")
+streamlit.header("🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥")
+streamlit.header("The Xtreme Metrix Explorer")
 
 selected_metric_name = streamlit.sidebar.selectbox(
     label="Select a metric", options=sorted(list(metrics.get_metric_names().keys()))
@@ -25,7 +26,6 @@ selected_time_grain = streamlit.sidebar.selectbox(
     "Select a time grain", options=available_time_grains
 )
 
-
 calculation_options = [
     'metrics.period_over_period(comparison_strategy="ratio", interval=1)',
     'metrics.period_over_period(comparison_strategy="difference", interval=1)',
@@ -39,7 +39,7 @@ secondary_calcs_list = streamlit.sidebar.multiselect(
 DEBUG = streamlit.sidebar.checkbox("Debug Mode", value=False)
 # with streamlit.spinner("Running Models"):
 #     streamlit.sidebar.button("Rerun Models", on_click=metrics._run_project())
-streamlit.sidebar.markdown("![Xtreme Metrix](https://media4.giphy.com/media/3KVcFEmdDl9NYaFTtx/giphy.gif?cid=ecf05e47x6zruzmmsovlj7w1kutkyh3jmj1wywn53cg2eguy&rid=giphy.gif&ct=g)")
+streamlit.sidebar.image("assets/fire-2.jpeg")
 def get_min_max_dates(metric_name):
     if "substack" in metric_name:
         return "2021-12-01", "2022-03-01"
@@ -64,21 +64,18 @@ with streamlit.spinner("Fetching query results"):
     df = metrics.get_query_results(query)
     df.columns = [c.lower() for c in df.columns]
 
-col1, col2 = streamlit.columns(2)
+streamlit.subheader(node["label"])
+streamlit.markdown(node["description"])
+streamlit.markdown(f'This metric is based on the model {node["model"]}. It is a {node["type"]} metric based on the column {node["sql"]}.')
 
-col1.subheader(selected_metric_name)
-col1.text(node["description"])
-col1.subheader("dbt Query")
-col1.text(query)
 
 if DEBUG:
     compiled = metrics._get_compiled_query(query)
-    col1.subheader("Compiled SQL")
-    col1.text(compiled)
+    streamlit.subheader("Compiled SQL")
+    streamlit.text(compiled)
 
-col2.subheader("Data Figure")
 with streamlit.spinner("Plotting results"):
-    fig = plt.figure(figsize=(10, 4))
+    fig, ax = plt.subplots(1, 1, figsize=(10, 4))
     if selected_dimension == "none" == "none":
         sns.lineplot(x="period", y=selected_metric_name.lower(), data=df)
     else:
@@ -88,7 +85,15 @@ with streamlit.spinner("Plotting results"):
             hue=selected_dimension.lower(),
             data=df,
         )
-    col2.pyplot(fig)
+    ax.set_title(selected_metric_name)
+    streamlit.pyplot(fig,  title=selected_metric_name)
 
-col2.dataframe(df)
+streamlit.subheader("Data Table")
+streamlit.dataframe(df)
+
+streamlit.subheader("dbt Query")
+streamlit.text(query)
+
+streamlit.markdown("🔥  [Blog](https://stkbailey.substack.com)  🔥  [GitHub](https://github.com/stkbailey/streamlit-dbt-metrics-explorer)  🔥  [Theme Song](https://www.youtube.com/watch?v=dQw4w9WgXcQ)  🔥")
+
 streamlit.image("assets/fire-header.jpeg", use_column_width="always")

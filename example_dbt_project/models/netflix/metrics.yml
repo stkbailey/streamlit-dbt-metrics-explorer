@@ -5,7 +5,7 @@ metrics:
   - name: count_of_netflix_show_releases
     label: Count of Netflix Show Releases
     model: ref('netflix_releases')
-    description: The number of shows released over time.
+    description: The number of shows released over time. Data downloaded from [Kaggle](https://www.kaggle.com/shivamb/netflix-shows).
 
     type: count_distinct
     sql: show_id

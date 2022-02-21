@@ -15,11 +15,8 @@ metrics:
     time_grains: [day, week, month]
 
     dimensions:
-    - subscription_type
     - activity_rating
     - emails_enabled_for_newsletter
-    - subscriptions_gifted
     - has_commented
     - has_opened_email
-    - has_gifted_subscription
-    - is_recently_active
+    - is_active_past_30_days

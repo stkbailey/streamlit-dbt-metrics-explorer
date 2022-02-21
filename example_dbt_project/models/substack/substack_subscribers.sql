@@ -40,7 +40,7 @@ select
     , comments_all_time > 0 as has_commented
     , email_opens_all_time > 0 as has_opened_email
     , subscriptions_gifted > 0 as has_gifted_subscription
-    , days_active_last_30_days > 0 as is_recently_active
+    , days_active_last_30_days > 0 as is_active_past_30_days
 
 from
     source

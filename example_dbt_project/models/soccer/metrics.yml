@@ -16,7 +16,6 @@ metrics:
     dimensions:
     - country
     - is_friendly
-    - is_tie
     - is_home_win
 
     filters:

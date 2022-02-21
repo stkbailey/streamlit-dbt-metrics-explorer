@@ -18,8 +18,8 @@ node = metrics.manifest["metrics"][selected_node_id]
 available_dimensions = node["dimensions"]
 available_time_grains = node["time_grains"]
 
-selected_dimensions_list = streamlit.sidebar.multiselect(
-    "Select one or more dimensions", options=available_dimensions
+selected_dimension = streamlit.sidebar.radio(
+    "Select a dimension", options=["none"] + available_dimensions
 )
 selected_time_grain = streamlit.sidebar.selectbox(
     "Select a time grain", options=available_time_grains
@@ -47,6 +47,10 @@ def get_min_max_dates(metric_name):
 
 
 min_date, max_date = get_min_max_dates(selected_metric_name)
+if selected_dimension == "none":
+    selected_dimensions_list = []
+else:
+    selected_dimensions_list = [selected_dimension]
 query = metrics.populate_template_query(
     metric_name=selected_metric_name,
     time_grain=selected_time_grain,
@@ -75,13 +79,13 @@ if DEBUG:
 col2.subheader("Data Figure")
 with streamlit.spinner("Plotting results"):
     fig = plt.figure(figsize=(10, 4))
-    if len(selected_dimensions_list) == 0:
+    if selected_dimension == "none" == "none":
         sns.lineplot(x="period", y=selected_metric_name.lower(), data=df)
     else:
         sns.lineplot(
             x="period",
             y=selected_metric_name.lower(),
-            hue=selected_dimensions_list[0].lower(),
+            hue=selected_dimension.lower(),
             data=df,
         )
     col2.pyplot(fig)

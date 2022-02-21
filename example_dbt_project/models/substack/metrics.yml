@@ -1,0 +1,22 @@
+version: 2
+
+
+metrics:
+  - name: count_of_substack_subscribers
+    label: Count of Data, People, Etc. Substack Subscribers
+    model: ref('substack_subscribers')
+    description: >
+      If you find any trends, let me know.
+
+    type: count_distinct
+    sql: subscriber_id
+
+    timestamp: subscribed_at
+    time_grains: [day, week, month]
+
+    dimensions:
+    - activity_rating
+    - emails_enabled_for_newsletter
+    - has_commented
+    - has_opened_email
+    - is_active_past_30_days

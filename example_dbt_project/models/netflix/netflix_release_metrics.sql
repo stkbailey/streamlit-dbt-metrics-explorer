@@ -1,8 +1,8 @@
-{{ config(materialized="table") }}
+ -- depends_on: {{ ref('netflix_releases') }}
 
-select * 
-from {{ metrics.metric(
-    metric_name='netflix_show_releases',
+select * from 
+{{ metrics.metric(
+    metric_name='count_of_netflix_show_releases',
     grain='week',
     dimensions=['show_type'],
     secondary_calculations=[
@@ -12,6 +12,5 @@ from {{ metrics.metric(
         metrics.rolling(aggregate="min", interval=4)
     ]
 ) }}
-
 where period between '2016-01-01':: date and '2021-10-01':: date
 order by period

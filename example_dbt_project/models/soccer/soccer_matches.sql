@@ -1,6 +1,4 @@
-{{ config(materialized="table") }}
-
-with matches as (
+with source as (
     select * from {{ ref("raw_soccer_matches") }}
 )
 
@@ -8,8 +6,8 @@ select
     date :: date as match_date
     , home_team :: text as home_team_name
     , away_team :: text as away_team_name
-    , home_score :: number as home_score
-    , away_score :: number as away_score
+    , home_score :: numeric as home_score
+    , away_score :: numeric as away_score
     , tournament :: text as tournament
     , city :: text as city
     , country :: text as country
@@ -18,4 +16,4 @@ select
     , home_score = away_score as is_tie
     , home_score > away_score as is_home_win
 from
-    matches
+    source

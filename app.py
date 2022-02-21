@@ -6,8 +6,8 @@ from utils import MetricsUtil
 
 metrics = MetricsUtil()
 
-streamlit.set_page_config(page_title="Metrics Explorer", layout="wide")
-streamlit.header("Metrics Explorer")
+streamlit.set_page_config(page_title="Metrics Explorer", layout="wide", page_icon="🔥")
+streamlit.header("🔥🔥🔥 Behold, The Xtreme Metrix Explorer 🔥🔥🔥")
 
 selected_metric_name = streamlit.sidebar.selectbox(
     label="Select a metric", options=sorted(list(metrics.get_metric_names().keys()))
@@ -39,7 +39,7 @@ secondary_calcs_list = streamlit.sidebar.multiselect(
 DEBUG = streamlit.sidebar.checkbox("Debug Mode", value=False)
 # with streamlit.spinner("Running Models"):
 #     streamlit.sidebar.button("Rerun Models", on_click=metrics._run_project())
-
+streamlit.sidebar.markdown("![Xtreme Metrix](https://media4.giphy.com/media/3KVcFEmdDl9NYaFTtx/giphy.gif?cid=ecf05e47x6zruzmmsovlj7w1kutkyh3jmj1wywn53cg2eguy&rid=giphy.gif&ct=g)")
 def get_min_max_dates(metric_name):
     if "substack" in metric_name:
         return "2021-12-01", "2022-03-01"
@@ -91,3 +91,4 @@ with streamlit.spinner("Plotting results"):
     col2.pyplot(fig)
 
 col2.dataframe(df)
+streamlit.image("assets/fire-header.jpeg", use_column_width="always")

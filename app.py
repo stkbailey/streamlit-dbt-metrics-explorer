@@ -10,7 +10,7 @@ streamlit.set_page_config(page_title="Metrics Explorer", layout="wide")
 streamlit.header("Metrics Explorer")
 
 selected_metric_name = streamlit.sidebar.selectbox(
-    label="Select a metric", options=list(metrics.get_metric_names().keys())
+    label="Select a metric", options=sorted(list(metrics.get_metric_names().keys()))
 )
 
 selected_node_id = metrics.metrics_list[selected_metric_name]
@@ -37,15 +37,23 @@ secondary_calcs_list = streamlit.sidebar.multiselect(
 )
 
 DEBUG = streamlit.sidebar.checkbox("Debug Mode", value=False)
+# with streamlit.spinner("Running Models"):
+#     streamlit.sidebar.button("Rerun Models", on_click=metrics._run_project())
 
-with streamlit.spinner("Building project"):
-    streamlit.sidebar.button("Rerun Project", on_click=metrics._run_project())
+def get_min_max_dates(metric_name):
+    if "substack" in metric_name:
+        return "2021-12-01", "2022-03-01"
+    return "2016-01-01", "2021-10-01"
 
+
+min_date, max_date = get_min_max_dates(selected_metric_name)
 query = metrics.populate_template_query(
     metric_name=selected_metric_name,
     time_grain=selected_time_grain,
     dimensions_list=selected_dimensions_list,
     secondary_calcs_list="[" + ",".join(secondary_calcs_list) + "]",
+    min_date=min_date,
+    max_date=max_date,
 )
 
 with streamlit.spinner("Fetching query results"):
@@ -61,8 +69,8 @@ col1.text(query)
 
 if DEBUG:
     compiled = metrics._get_compiled_query(query)
+    col1.subheader("Compiled SQL")
     col1.text(compiled)
-    col1.dataframe(df)
 
 col2.subheader("Data Figure")
 with streamlit.spinner("Plotting results"):

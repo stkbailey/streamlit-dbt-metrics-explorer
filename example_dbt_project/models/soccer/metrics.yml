@@ -11,7 +11,7 @@ metrics:
     sql: 'match_date'
 
     timestamp: match_date
-    time_grains: [week, month, year]
+    time_grains: [month, year]
 
     dimensions:
     - country

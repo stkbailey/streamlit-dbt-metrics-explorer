@@ -2,7 +2,7 @@
 
 select * from 
 {{ metrics.metric(
-    metric_name='netflix_show_releases',
+    metric_name='count_of_netflix_show_releases',
     grain='week',
     dimensions=['show_type'],
     secondary_calculations=[

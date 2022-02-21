@@ -67,7 +67,13 @@ class MetricsUtil:
         return pandas.read_sql_query(compiled, self.conn)
 
     def populate_template_query(
-        self, metric_name, time_grain, dimensions_list=[], secondary_calcs_list=[]
+        self,
+        metric_name,
+        time_grain,
+        dimensions_list=[],
+        secondary_calcs_list=[],
+        min_date="2016-01-01",
+        max_date="2021-10-01",
     ):
         query = """
         select * from
@@ -79,13 +85,15 @@ class MetricsUtil:
                 secondary_calculations={secondary_calcs_list}
             )
         }}}}
-        where period between '2016-01-01':: date and '2021-10-01':: date
+        where period between '{min_date}':: date and '{max_date}':: date
         order by period
         """.format(
             metric_name=metric_name,
             time_grain=time_grain,
             dimensions_list=dimensions_list,
             secondary_calcs_list=secondary_calcs_list,
+            min_date=min_date,
+            max_date=max_date,
         )
         return query
 

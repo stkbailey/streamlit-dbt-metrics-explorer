@@ -3,7 +3,7 @@ version: 2
 
 metrics:
   - name: count_of_substack_subscribers
-    label: count_of_substack_subscribers
+    label: Count of Data, People, Etc. Substack Subscribers
     model: ref('substack_subscribers')
     description: >
       If you find any trends, let me know.

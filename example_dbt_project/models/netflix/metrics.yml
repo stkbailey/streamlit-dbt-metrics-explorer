@@ -2,8 +2,8 @@ version: 2
 
 
 metrics:
-  - name: netflix_show_releases
-    label: Netflix Show Releases
+  - name: count_of_netflix_show_releases
+    label: Count of Netflix Show Releases
     model: ref('netflix_releases')
     description: The number of shows released over time.
 
@@ -11,12 +11,12 @@ metrics:
     sql: show_id
 
     timestamp: show_added_date
-    time_grains: [week, month, year]
+    time_grains: [month, year]
 
     dimensions:
     - show_type
-    - director
-    - country
+    - has_director
+    - is_usa_release
     - release_decade
     - maturity_rating
 

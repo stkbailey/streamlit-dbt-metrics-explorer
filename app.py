@@ -38,7 +38,7 @@ secondary_calcs_list = streamlit.sidebar.multiselect(
 
 # with streamlit.spinner("Running Models"):
 #     streamlit.sidebar.button("Rerun Models", on_click=metrics._run_project())
-streamlit.sidebar.markdown("🔥 [Blog](https://stkbailey.substack.com)")
+streamlit.sidebar.markdown("🔥 [Blog](https://stkbailey.substack.com/p/kicking-the-tires-on-dbt-metrics?r=a3d32&utm_campaign=app&utm_medium=web)")
 streamlit.sidebar.markdown("🔥 [GitHub](https://github.com/stkbailey/streamlit-dbt-metrics-explorer)")
 streamlit.sidebar.markdown("🔥 [Theme Song](https://www.youtube.com/watch?v=dQw4w9WgXcQ)")
 streamlit.sidebar.image("assets/fire-2.jpeg")
